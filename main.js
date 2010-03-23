@@ -28,8 +28,10 @@ function updateInfo(){
 							 lepra.inboxunreadcomms
 						 )});
 				}
-				if(getShowOnBadge() !== "none") {
-					chrome.browserAction.setBadgeText({text:lepra[getShowOnBadge()]})
+				var showOnBadge = getShowOnBadge();
+				if(showOnBadge !== "none") {
+					var badgeText = lepra[showOnBadge] !== '0' ? lepra[showOnBadge] : '';
+					chrome.browserAction.setBadgeText({text: badgeText});
 				}
 
 			 },

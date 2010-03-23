@@ -33,8 +33,14 @@
 	<script type="text/javascript" src="options.js"></script>
 </head>
 <body>
+	<div style="text-align: rigth">
+		<b>Текст:</b>
+		<a href="#" id="bigger">Крупнее</a>|
+		<a href="#" id="smaller">Мельче</a>
+	</div>
+	<div id="options">
 	<h2 id="greeting"></h2>
-<form id="options">
+<form id="options-form">
 	<table cellspacing="0">
 	     <tr valign="top">
 	          <td><b>По клику:</b></td>
@@ -94,8 +100,8 @@
 		     <td>Постоянные ссылки на подлепры в навигационной панели</td>
 		     <td><input type="checkbox" name="sublepras" /></td>
 		</tr>
-		<tr valign="top">
-			<td>Shortcutы в коробоке для комментариев <br />
+<!--		<tr valign="top">
+			<td>Shortcutы в коробке для комментариев <br />
 				<div id="textareashortcuts">
 					<table>
 						<tr><td><b>Bold</b></td><td><input type="text" name="bold" /></td></tr>
@@ -110,7 +116,7 @@
 				</div>
 			</td>
 		     <td><input type="checkbox" name="textareashortcuts" id="textareascuts" /></td>
-		</tr>
+		</tr> -->
 		<tr>
 		     <td>LeproTotalComments(by <a href="http://leprosorium.ru/users/LeproCurillo">LeproCurillo</a>)</td>
 		     <td><input type="checkbox" name="totalcomments" /></td>
@@ -124,5 +130,6 @@
 
 	</table>
 </form>
+</div>
 </body>
 </html>

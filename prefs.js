@@ -93,3 +93,12 @@ function getShortcutsBindings(callback){
 	});
 	port.postMessage(undefined);	
 }
+
+function readSettings(options, fn){
+	var port = chrome.extension.connect({name: "readsettings"});
+
+	port.onMessage.addListener(function(settings){
+		fn(settings);
+	});
+	port.postMessage(options);
+}

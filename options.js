@@ -93,14 +93,32 @@ function randInt(max) {
   } 
 
 $(function(){
-		var formNode = document.getElementById('options');   
+		var formNode = document.getElementById('options-form');   
 		var clickBehavior = getClickBehavior(); 
 		var refreshIterval = getRefreshInterval();
 		var refreshIntervalNode = formNode['refresh-interval'];
 		var showOnBadgeNode = formNode['show-on-badge'];
 		var showOnBadge = getShowOnBadge();
 		var textareaShortcuts = getTextareaShortcuts();
+		var defaultFontSize = localStorage["fontSize"] || "medium";
+		var fontSizes = ["xx-small", "x-small", "small", "medium", "large" ,"x-large", "xx-large"];
+		var fontSizeIndex = fontSizes.indexOf(defaultFontSize);
 
+		$("#bigger").click(function(){
+			if(fontSizeIndex + 1 < fontSizes.length){
+				fontSizeIndex += 1;
+				$("#options").css({fontSize: fontSizes[fontSizeIndex]});
+				localStorage["fontSize"] = fontSizes[fontSizeIndex];
+			}
+		});
+		$("#smaller").click(function(){
+			if(fontSizeIndex - 1 >= 0){
+				fontSizeIndex -= 1;
+				$("#options").css({fontSize: fontSizes[fontSizeIndex]});				
+				localStorage["fontSize"] = fontSizes[fontSizeIndex];
+			}
+		});
+		$("#options").css({fontSize: defaultFontSize});
 		$("#greeting").text(greetings[randInt(greetings.length)]);
 		$("#" + clickBehavior).attr({checked: true});
 		for (var i = 0, refreshValueNode; refreshValueNode = refreshIntervalNode[i]; i++) {

@@ -37,6 +37,24 @@
 							}
 						}
 					});
+				} else if(port.name === "readsettings"){
+					port.onMessage.addListener(function(msg){
+							var settings;
+
+							if(typeof msg === "string"){
+								settings = localStorage[msg];
+							} else if(msg instanceof Array){
+								settings = new Object();
+								for(var i = 0, n = msg.length; i < n; i += 1){
+									settings[msg[i]] = localStorage[msg[i]];
+								}
+							}
+							port.postMessage(settings);
+					})
+				} else if(port.name === "setbadgetext"){
+					port.onMessage.addListener(function(msg){
+						chrome.browserAction.setBadgeText({text: msg});
+					});
 				}
 
 			});

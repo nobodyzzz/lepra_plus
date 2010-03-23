@@ -173,7 +173,6 @@ function keyDownHandler(e) {
 }
 
 var newComms = getNewComments();
-console.log(window.center());
 var index = 0;
 var css = ".lc-next-block { \
 		position: fixed; \

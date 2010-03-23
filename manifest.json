@@ -1,37 +1,37 @@
 {
-   "background_page": "background.html",
-   "browser_action": {
-      "default_icon": "images/logo.png",
-      "popup": "popup.html"
-   },
-   "content_scripts": [ {
-      "js": [ "prefs.js", "scripts/sublepras.js" ],
-      "matches": [ "http://*.leprosorium.ru/*" ]
-   }, {
-      "js": [ "prefs.js", "scripts/nicecommentnavigation.js" ],
-      "matches": [ "http://leprosorium.ru/comments/*", "http://*.leprosorium.ru/comments/*", "http://leprosorium.ru/my/inbox/*" ]
-   }, {
-      "js": [ "scripts/totalcomments.js" ],
-      "matches": [ "http://*.leprosorium.ru/comments/*" ]
-   }, {
-      "js": [ "prefs.js", "scripts/personal_hell.js" ],
-      "matches": [ "http://*.leprosorium.ru/*" ]
-   }, {
-      "js": [ "prefs.js", "scripts/leprapreview.js" ],
-      "matches": [ "http://*.leprosorium.ru/*" ]
-   }, {
-      "js": [ "prefs.js", "jquery.js", "scripts/jquery.hotkeys.js", "scripts/textareashortcuts.js" ],
-      "matches": [ "http://*.leprosorium.ru/*" ]
-   }, {
-      "js": [ "prefs.js", "scripts/inline_info_ex.js" ],
-      "matches": [ "http://*.leprosorium.ru/*" ]
-   } ],
-   "description": "\u041D\u0430\u0434\u043E \u0434\u0435\u043B\u0430\u0442\u044C \u0442\u043E, \u0447\u0442\u043E \u043D\u0443\u0436\u043D\u043E \u043B\u044E\u0434\u044F\u043C, \u0430 \u043D\u0435 \u0442\u043E, \u0447\u0435\u043C \u043C\u044B \u0437\u0430\u043D\u0438\u043C\u0430\u0435\u043C\u0441\u044F, %username%.",
-   "icons": {
+	"name": "Lepra+",
+	"version": "0.0.6",
+	"description": "Надо делать то, что нужно людям, а не то, чем мы занимаемся, %username%.",
+	"icons": {
       "128": "images/icon-128.gif"
-   },
-   "name": "Lepra+",
-   "options_page": "options.html",
-   "permissions": [ "http://leprosorium.ru/*", "tabs" ],
-   "version": "0.0.5"
+   	},
+	"permissions": [ "http://leprosorium.ru/*", "tabs" ],
+	"browser_action": {
+		"default_icon": "images/logo.png", 
+		"popup": "popup.html"                
+	},
+	"options_page": "options.html",	
+	"background_page": "background.html",
+	"content_scripts": [{
+		"js": ["prefs.js", "scripts/sublepras.js"],
+		"matches": ["http://*.leprosorium.ru/*"]		
+	}, {
+		"js": ["prefs.js", "scripts/nicecommentnavigation.js"],
+		"matches": ["http://leprosorium.ru/comments/*", "http://*.leprosorium.ru/comments/*", "http://leprosorium.ru/my/inbox/*"]
+	}, {
+		"js" : ["scripts/totalcomments.js"],
+		"matches" : ["http://*.leprosorium.ru/comments/*"]
+	}, {
+		"js": ["prefs.js", "scripts/personal_hell.js"],
+		"matches": ["http://*.leprosorium.ru/*"]		
+	}, {
+		"js": ["prefs.js", "scripts/leprapreview.js"],
+		"matches": ["http://*.leprosorium.ru/*"]		
+	},  {
+		"js": ["prefs.js", "scripts/inline_info_ex.js"],
+		"matches": ["http://*.leprosorium.ru/*"]		
+	},{
+		"js": ["prefs.js", "jquery.js", "scripts/badgeliveupdate.js"],
+		"matches": ["http://*.leprosorium.ru/*"]
+	}]
 }
