@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="prefs.js" type="text/javascript"></script>
+<script src="jquery.js" type="text/javascript" />
+<script type="text/javascript">
+$(function () {
+    if (getClickBehavior() === 'popup') {
+        setTimeout(function () {
+            $.ajax({
+                url: "http://leprosorium.ru/api/lepropanel/",
+                dataType: "json",
+			 success: function (lepra) {
+				var lastkarmavotes = "Last votes: \r\n";
+
+				for(var i = 0; i < 3; i++)
+				{
+					var vote = lepra.karmavotes.pop()
+					if(vote.attitude[0] !== "-"){
+				 		vote.attitude = "+" + vote.attitude;
+				 	}
+					lastkarmavotes += vote.login + " " + vote.attitude + "\r\n";
+				}
+                    $("#loading").hide();
+                    $("#result").show();
+				$("#piska").text(lepra.karma + "/" + lepra.rating).attr({title: lastkarmavotes});;
+                    $("#inbox").text(lepra.inboxunreadposts + "/" + lepra.inboxunreadcomms);
+				$("#my").text(lepra.myunreadposts + "/" + lepra.myunreadcomms);			
+                    $("#glagne").click(function () {
+                        gotourl('http://leprosorium.ru/');
+                    });
+                    $("#things").click(function () {
+                        gotourl('http://leprosorium.ru/my/');
+                    });
+                    $("#inboxes").click(function () {
+                        gotourl('http://leprosorium.ru/my/inbox/');
+                    });
+                },
+                error: function () {
+                    $("#loading").hide();
+                    $("#error").show();
+                }
+            });
+        }, 0);
+    } else {
+	     chrome.tabs.create({
+                        url: 'http://leprosorium.ru/'
+                    });
+	    window.close(); 
+
+    }
+});
+
+function gotourl(_url) {
+    chrome.windows.getCurrent(function (w) {
+        chrome.tabs.getAllInWindow(w.id, function (tabs) {
+            for (var i = 0, n = tabs.length; i < n; i += 1) {
+                if (tabs[i].url && tabs[i].url === _url) {
+                    chrome.tabs.update(tabs[i].id, {
+                        selected: true
+                    });
+                    return;
+                }
+            }
+            chrome.tabs.getSelected(w.id, function (tab) {
+                if (tab.url === "chrome://newtab/") {
+                    chrome.tabs.update(tab.id, {
+                        url: _url
+                    });
+                } else {
+                    chrome.tabs.create({
+                        url: _url
+                    });
+                }
+            });
+        });
+    });
+}
+</script>
+<style type="text/css">
+	body{ color: black; overflow: hidden; margin: 0; padding: 4px; font-family: calibri, tahoma, sans-serif; white-space: nowrap; }
+	tr.x:hover { background-color: #e1eafe; cursor: pointer; }
+</style>
+</head>
+<body>
+	<div id="loading">
+		<table>
+			<tr valing="center">
+				<td>
+					<img src="images/loading.gif" />
+				</td>
+				<td>
+					<b> Загружаем... <b>
+				</td>
+			<tr>
+		</table>
+	</div>
+	<div id="result" style="display:none;">
+		<table cellspacing="0">
+			<tr class="x"  id="glagne">
+				<td align="center"><img src="images/logo_mini.png"/></td><td id="piska"></td>
+			</tr>
+			<tr class="x" id="things">
+				<td align="center"><img src="images/my.gif" /></td><td id="my"></td>
+			</tr>
+			<tr class="x"  id="inboxes">
+				<td align="center"><img src="images/inbox.gif" /></td><td id="inbox"></td>
+			</tr>
+		</table>
+	</div>
+	<div id="error" style="display:none;">
+		<img src="images/error.jpg" />
+	</div>
+</body>
+</html>
+

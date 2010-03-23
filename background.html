@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <title>Lepra+ backroung page</title>
+    <script src="prefs.js" type="text/javascript"></script>
+    <script src="jquery.js" type="text/javascript"></script>
+    <script src="main.js" type="text/javascript"></script>
+    <script type="text/javascript">
+	     var updateInterval = null;
+		$(function () {
+			if (getClickBehavior() === "glagne" || getShowOnBadge() !== "none") {
+			   updateInfo();
+			   updateInterval = setInterval(updateInfo, getRefreshInterval());
+			}
+			chrome.self.onConnect.addListener(function(port){
+				if(port.name === "userjs"){
+					port.onMessage.addListener(function(msg){
+						var enabled = localStorage[msg] || "true";
+						
+						port.postMessage(enabled === "true");
+					});					
+				} else if(port.name === "textarea-shortcuts"){
+					port.onMessage.addListener(function(msg){
+						port.postMessage(getTextareaShortcuts());
+					});
+				} else if(port.name === "updateinfo"){
+					port.onMessage.addListener(function(msg){
+						if(msg === "start"){
+							if(!updateInterval){
+								updateInterval = setInterval(updateInfo, getRefreshInterval());
+							}
+						} else if (msg === "stop"){
+							if(updateInterval){
+								clearInterval(updateInterval);
+								updateInterval = null;
+							}
+						}
+					});
+				}
+
+			});
+		});
+    </script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <title>Лепро+ настройки</title>
+    <style type="text/css">
+	body {
+	    color: black;
+	    overflow: hidden;
+	    margin: 0;
+	    padding: 4px;
+	    font-family: calibri,tahoma, sans-serif;
+	    white-space: nowrap;
+    }
+	.buttons {
+      text-align: right;
+      padding-top: 1em;
+ } 
+ .irony{
+	 color: #C33;
+	 font-style: italic;
+ }
+ #textareashortcuts{
+	margin-left: 50px;
+ }
+
+
+	</style>
+	<script type="text/javascript" src="keycode.js"></script>
+	<script type="text/javascript" src="prefs.js"></script>
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="main.js"></script>
+	<script type="text/javascript" src="options.js"></script>
+</head>
+<body>
+	<h2 id="greeting"></h2>
+<form id="options">
+	<table cellspacing="0">
+	     <tr valign="top">
+	          <td><b>По клику:</b></td>
+	          <td>
+				<input type="radio" name="click-behavior" value="popup" id="popup"/>
+				<label for="popup">Показывать pop-up</label><br>
+				<input type="radio" name="click-behavior" value="glagne" id="glagne"/>
+				<label for="glagne">Открывать глагне</label></td>
+		</tr>
+		<tr>
+			<td><b>Показывать на иконке:</b></td>
+			<td>
+			     <select name="show-on-badge">
+			          <option value="none">Ничего</option>
+			          <option value="karma">Карму</option>
+			          <option value="rating">Рейтинг</option>
+			          <option value="myunreadposts">Количество новых постов в моих вещах</option>
+			          <option value="myunreadcomms">Количество новых комментариев в моих вещах</option>
+					<option value="inboxunreadposts">Количество новых инбоксов</option>
+					<option value="inboxunreadcomms">Количество новыйх комментариев в инбоксах</option>
+			     </select>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			     <b>Обновлять каждые:</b>
+			</td>
+			<td>
+				<select name="refresh-interval">
+					<option value="300000">5 минут</option>
+					<option value="600000">10 минут</option>
+					<option value="900000">15 минут</option>
+					<option value="1800000">30 минут</option>
+		    		</select> 
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2"><b>Скрипты</b></td>
+		</tr>
+		<tr>
+		     <td>Inline UserInfo (by <a href="http://leprosorium.ru/users/tender">tender</a>)</td>
+		     <td><input type="checkbox" name="inline_info_ex" /></td>
+		</tr>
+		<tr>
+		     <td>Предпросмотра постов и комментов(by <a href="http://leprosorium.ru/users/dilesoft">dilesoft</a>)</td>
+		     <td><input type="checkbox" name="leprapreview" /></td>
+		</tr>
+		<tr>
+		     <td>Удобная навигация по новым комментариям</td>
+		     <td><input type="checkbox" name="nicecommentnavigation" /></td>
+		</tr>
+		<tr>
+		     <td>Собственный ОННН(by <a href="http://leprosorium.ru/users/Din">Din</a>)</td>
+		     <td><input type="checkbox" name="personal_hell" /></td>
+		</tr>
+		<tr>
+		     <td>Постоянные ссылки на подлепры в навигационной панели</td>
+		     <td><input type="checkbox" name="sublepras" /></td>
+		</tr>
+		<tr valign="top">
+			<td>Shortcutы в коробоке для комментариев <br />
+				<div id="textareashortcuts">
+					<table>
+						<tr><td><b>Bold</b></td><td><input type="text" name="bold" /></td></tr>
+						<tr><td><i>Italic</i></td><td><input type="text" name="italic" /></td></tr>
+						<tr><td><u>Underline</u></td><td><input type="text" name="underline" /></td></tr>
+						<tr><td>x<sup>2</sup></td><td><input type="text" name="sup" /></td></tr>
+						<tr><td>x<sub>2</sub></td><td><input type="text" name="sub" /></td></tr>
+						<tr><td><span class="irony">Irony</span></td><td><input type="text" name="irony" /></td></tr>
+						<tr><td>Link</td><td><input type="text" name="link" /></td></tr>
+						<tr><td>Image</td><td><input type="text" name="image" /></td></tr>
+					</table>
+				</div>
+			</td>
+		     <td><input type="checkbox" name="textareashortcuts" id="textareascuts" /></td>
+		</tr>
+		<tr>
+		     <td>LeproTotalComments(by <a href="http://leprosorium.ru/users/LeproCurillo">LeproCurillo</a>)</td>
+		     <td><input type="checkbox" name="totalcomments" /></td>
+		</tr>
+
+<tr>
+    <td colspan="2" class="buttons" >
+      <button id="save-button">Save</button>
+    </td>
+  </tr> 
+
+	</table>
+</form>
+</body>
+</html>

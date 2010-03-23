@@ -1,0 +1,40 @@
+String.prototype.fmt = function() {
+	var txt = this;
+	for (var i = 0; i < arguments.length; i++) {
+		var exp = new RegExp('\\{' + (i) + '\\}', 'gm');
+		txt = txt.replace(exp, arguments[i]);
+	}
+	return txt;
+};
+function updateInfo(){
+	 $.ajax({
+                url: "http://leprosorium.ru/api/lepropanel/",
+                dataType: "json",
+			 success: function (lepra) {
+				 var lastVote = lepra.karmavotes.pop();
+				 if(lastVote.attitude[0] !== "-"){
+				 	lastVote.attitude = "+" + lastVote.attitude;
+				 }
+				 if(getClickBehavior() === "glagne"){
+					 chrome.browserAction.setTitle({title : 
+						      "Карма: {0} ({1} {2})\nРейтинг: {3}\nМои вещи: {4}/{5}\nИнбокс: {6}/{7}".fmt(
+							 lepra.karma,
+							 lastVote.login,
+							 lastVote.attitude,
+							 lepra.rating, 
+							 lepra.myunreadposts, 
+							 lepra.myunreadcomms,
+							 lepra.inboxunreadposts,
+							 lepra.inboxunreadcomms
+						 )});
+				}
+				if(getShowOnBadge() !== "none") {
+					chrome.browserAction.setBadgeText({text:lepra[getShowOnBadge()]})
+				}
+
+			 },
+			 error: function () {
+				 chrome.browserAction.setTitle({title : "Балет :("});				
+			 }
+            });
+}
