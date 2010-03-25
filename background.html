@@ -55,6 +55,14 @@
 					port.onMessage.addListener(function(msg){
 						chrome.browserAction.setBadgeText({text: msg});
 					});
+				} else if(port.name === "xhr"){
+					port.onMessage.addListener(function(url){
+						var xhr = new XMLHttpRequest();
+
+						xhr.open("GET", requestUrl, false);
+						xhr.send();
+						port.postMessage(xhr);
+					});
 				}
 
 			});
