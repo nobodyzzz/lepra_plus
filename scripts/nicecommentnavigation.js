@@ -6,100 +6,6 @@ ifEnabled("nicecommentnavigation", function(){
 // @include http://*.leprosorium.ru/comments/*
 // @include http://leprosorium.ru/my/inbox/*
 // ==/UserScript==
-///{{{ utility functions, taken from web
-function getElementsByClass(searchClass, node, tag) {
-	var classElements = new Array();
-	if (node == null) node = document;
-	if (tag == null) tag = '*';
-	var els = node.getElementsByTagName(tag);
-	var elsLen = els.length;
-	var pattern = new RegExp("(^|\\s)" + searchClass + "(\\s|$)");
-	for (i = 0, j = 0; i < elsLen; i++) {
-		if (pattern.test(els[i].className)) {
-			classElements[j] = els[i];
-			j++;
-		}
-	}
-	return classElements;
-}
-
-window.size = function() {
-	var w = 0;
-	var h = 0;
-
-	//IE
-	if (!window.innerWidth) {
-		//strict mode
-		if (! (document.documentElement.clientWidth == 0)) {
-			w = document.documentElement.clientWidth;
-			h = document.documentElement.clientHeight;
-		}
-		//quirks mode
-		else {
-			w = document.body.clientWidth;
-			h = document.body.clientHeight;
-		}
-	}
-	//w3c
-	else {
-		w = window.innerWidth;
-		h = window.innerHeight;
-	}
-	return {
-		width: w,
-		height: h
-	};
-}
-
-window.center = function() {
-	var hWnd = (arguments[0] != null) ? arguments[0] : {
-		width: 0,
-		height: 0
-	};
-
-	var _x = 0;
-	var _y = 0;
-	var offsetX = 0;
-	var offsetY = 0;
-
-	//IE
-	if (!window.pageYOffset) {
-		//strict mode
-		if (! (document.documentElement.scrollTop == 0)) {
-			offsetY = document.documentElement.scrollTop;
-			offsetX = document.documentElement.scrollLeft;
-		}
-		//quirks mode
-		else {
-			offsetY = document.body.scrollTop;
-			offsetX = document.body.scrollLeft;
-		}
-	}
-	//w3c
-	else {
-		offsetX = window.pageXOffset;
-		offsetY = window.pageYOffset;
-	}
-
-	_x = ((this.size().width - hWnd.width) / 2) + offsetX;
-	_y = ((this.size().height - hWnd.height) / 2) + offsetY;
-
-	return {
-		x: _x,
-		y: _y
-	};
-}
-///}}}
-function getNewComments() {
-	var comments = document.getElementById("js-commentsHolder");
-	var newComments = null;
-
-	if (comments) {
-		newComments = getElementsByClass("new", comments, "div");
-	}
-
-	return newComments;
-}
 
 function findPos(obj) {
 	var curtop = 0;
@@ -109,30 +15,18 @@ function findPos(obj) {
 			curtop += obj.offsetTop;
 		}
 		while (obj = obj.offsetParent);
-		return [curtop];
+		return curtop;
 	}
 }
 
 function drawBorder(element) {
-	var dt = getElementsByClass("dt", element, "div")[0];
-	var p = getElementsByClass("p", element, "div")[0];
-
-	dt.style.border = "1px solid black";
-	dt.style.borderWidth = "1px 1px 0 1px";
-
-	p.style.border = "1px solid black";
-	p.style.borderWidth = "0 1px 1px 1px";
+	$("#" + element.id + " .dt").addClass("dt_border");
+	$("#" + element.id + " .p").addClass("p_border");
 }
 
 function removeBorder(element) {
-	var dt = getElementsByClass("dt", element, "div")[0];
-	var p = getElementsByClass("p", element, "div")[0];
-
-	dt.style.border = "";
-	dt.style.borderWidth = "";
-
-	p.style.border = "";
-	p.style.borderWidth = "";
+	$("#" + element.id + " .dt").removeClass("dt_border");
+	$("#" + element.id + " .p").removeClass("p_border");
 }
 
 function ScrollToNextNewComment() {
@@ -172,49 +66,14 @@ function keyDownHandler(e) {
 	}
 }
 
-var newComms = getNewComments();
+var newComms = $("#js-commentsHolder div.new").get();
 var index = 0;
-var css = ".lc-next-block { \
-		position: fixed; \
-		top: 50%; \
-		right: 0px; \
-		z-index: 100; \
-	} \
-	.lc-next-block span { \
-		display: block; \
-		color: #ccc; \
-		border: 1px solid #ccc; \
-		padding: 5px 10px; \
-		margin-bottom: 1px; \
-		font-size: 75%; \
-		cursor: pointer; \
-	} \
-	.lc-next-block span:hover { \
-		color: #000; \
-		border: 1px solid #000; \
-	} \
-";
 
 if (newComms.length > 0) {
-	var style = document.createElement("STYLE");
-	style.type = "text/css";
-	style.appendChild(document.createTextNode(css));
-	document.body.appendChild(style);
-
-	var navBlock = document.createElement("DIV");
-	navBlock.className = "lc-next-block";
-
-	navLinkNext = document.createElement("SPAN");
-	navLinkNext.appendChild(document.createTextNode("↓"));
-	navLinkNext.addEventListener("click", ScrollToNextNewComment, false);
-
-	navLinkPrev = document.createElement("SPAN");
-	navLinkPrev.appendChild(document.createTextNode("↑"));
-	navLinkPrev.addEventListener("click", ScrollToPrevNewComment, false);
-
-	navBlock.appendChild(navLinkPrev);
-	navBlock.appendChild(navLinkNext);
-	document.body.appendChild(navBlock);
+	$("<div />", {className: "lc-next-block"})
+		.append($("<span />", { text: "↑", click: ScrollToPrevNewComment }))
+		.append($("<span />", { text: "↓", click: ScrollToNextNewComment }))
+		.appendTo("body");
 	document.addEventListener('keydown', keyDownHandler, false);
 }
 });
