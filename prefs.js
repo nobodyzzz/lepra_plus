@@ -11,7 +11,7 @@ var USER_SCRIPTS = [
 'nicecommentnavigation',
 'personal_hell',
 'sublepras',
-//'textareashortcuts',
+'textareashortcuts',
 'totalcomments'
 ]
 

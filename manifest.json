@@ -28,11 +28,14 @@
 	}, {
 		"js": ["prefs.js", "scripts/leprapreview.js"],
 		"matches": ["http://*.leprosorium.ru/*"]		
-	},  {
+	}, {
 		"js": ["prefs.js", "scripts/inline_info_ex.js"],
 		"matches": ["http://*.leprosorium.ru/*"]		
-	},{
+	}, {
 		"js": ["prefs.js", "jquery.js", "scripts/badgeliveupdate.js"],
 		"matches": ["http://*.leprosorium.ru/*"]
-	}]
+	}, {
+      "js": [ "prefs.js", "jquery.js", "scripts/jquery.hotkeys.js", "scripts/textareashortcuts.js" ],
+      "matches": [ "http://*.leprosorium.ru/*" ]
+   	}]
 }

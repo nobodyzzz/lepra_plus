@@ -138,7 +138,7 @@ $(function(){
 		for(var i = 0; userjs = USER_SCRIPTS[i]; i++){
 			formNode[userjs].checked = getUserJsEnabled(userjs);
 		}
-		/*$("#textareascuts").click(function() { $("#textareashortcuts").toggle(0); });
+		$("#textareascuts").click(function() { $("#textareashortcuts").toggle(0); });
 		if(!formNode["textareashortcuts"].checked){
 			$("#textareashortcuts").hide();
 		}
@@ -156,7 +156,7 @@ $(function(){
 					e.stopPropagation(); 
 					e.preventDefault();
 				}
-		});*/
+		});
 		$("#save-button").click(function(){ 				 
 			var clickBehaviorNode = formNode['click-behavior']; 
 			for (var i = 0, clickBehaviorOptionNode; clickBehaviorOptionNode = clickBehaviorNode[i]; i++) { 
