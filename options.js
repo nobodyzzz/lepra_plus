@@ -94,7 +94,8 @@ function randInt(max) {
 
 $(function(){
 		var formNode = document.getElementById('options-form');   
-		var clickBehavior = getClickBehavior(); 
+		var clickBehavior = getClickBehavior();
+		var navigateWith = getNavigateWith(); 
 		var refreshIterval = getRefreshInterval();
 		var refreshIntervalNode = formNode['refresh-interval'];
 		var showOnBadgeNode = formNode['show-on-badge'];
@@ -121,6 +122,7 @@ $(function(){
 		$("#options").css({fontSize: defaultFontSize});
 		$("#greeting").text(greetings[randInt(greetings.length)]);
 		$("#" + clickBehavior).attr({checked: true});
+		$("#" + navigateWith).attr({checked: true});
 		for (var i = 0, refreshValueNode; refreshValueNode = refreshIntervalNode[i]; i++) {
 			if (refreshValueNode.value == refreshIterval) {
 				refreshValueNode.selected = 'true';
@@ -136,7 +138,7 @@ $(function(){
 		for(var i = 0; userjs = USER_SCRIPTS[i]; i++){
 			formNode[userjs].checked = getUserJsEnabled(userjs);
 		}
-		$("#textareascuts").click(function() { $("#textareashortcuts").toggle(0); });
+		/*$("#textareascuts").click(function() { $("#textareashortcuts").toggle(0); });
 		if(!formNode["textareashortcuts"].checked){
 			$("#textareashortcuts").hide();
 		}
@@ -154,12 +156,18 @@ $(function(){
 					e.stopPropagation(); 
 					e.preventDefault();
 				}
-		});
+		});*/
 		$("#save-button").click(function(){ 				 
 			var clickBehaviorNode = formNode['click-behavior']; 
 			for (var i = 0, clickBehaviorOptionNode; clickBehaviorOptionNode = clickBehaviorNode[i]; i++) { 
 				if (clickBehaviorOptionNode.checked) { 
 					setClickBehavior(clickBehaviorOptionNode.value); 
+				} 
+			}
+			var navigateWithNode = formNode['navigate-with'];
+			for (var i = 0, navigateWithOptionNode; navigateWithOptionNode = navigateWithNode[i]; i++) { 
+				if (navigateWithOptionNode.checked) { 
+					setNavigateWith(navigateWithOptionNode.value); 
 				} 
 			}
 			

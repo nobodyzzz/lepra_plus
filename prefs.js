@@ -4,13 +4,14 @@ var CLICK_BEHAVIOR_KEY = 'click-behavior';
 var REFRESH_INTERVAL_KEY = 'refresh-interval';
 var SHOW_ON_BADGE_KEY = 'show-on-badge';
 var TEXT_AREA_SHORTCUTS_KEY = 'text-area-shortcuts';
+var NAVIGATE_WITH_KEY = "navigate-with";
 var USER_SCRIPTS = [
 'inline_info_ex',
 'leprapreview',
 'nicecommentnavigation',
 'personal_hell',
 'sublepras',
-'textareashortcuts',
+//'textareashortcuts',
 'totalcomments'
 ]
 
@@ -101,4 +102,11 @@ function readSettings(options, fn){
 		fn(settings);
 	});
 	port.postMessage(options);
+}
+
+function getNavigateWith(){
+	return localStorage[NAVIGATE_WITH_KEY] || "arrows";
+}
+function setNavigateWith(value){
+	localStorage[NAVIGATE_WITH_KEY] = value;
 }

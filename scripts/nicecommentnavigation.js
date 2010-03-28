@@ -30,22 +30,34 @@ function removeBorder(element) {
 }
 
 function ScrollToNextNewComment() {
+	var pos = 0;
+
 	removeBorder(newComms[index]);
-	index++;
-	index %= newComms.length;
+	do{
+		index++;
+		index %= newComms.length;
+		pos = findPos(newComms[index])
+	}while(window.pageYOffset > pos);
 	drawBorder(newComms[index]);
-	window.scroll(0, findPos(newComms[index]) - 100);
+	window.scroll(0, pos - 10);
+	$("#current_comment").text(index + 1);
 }
 
 function ScrollToPrevNewComment() {
+	var pos = 0;
+
 	removeBorder(newComms[index]);
-	index--;
-	index %= newComms.length;
-	if (index < 0) {
-		index += newComms.length;
-	}
+	do{	
+		index--;
+		index %= newComms.length;
+		if (index < 0) {
+			index += newComms.length;
+		}
+		pos = findPos(newComms[index])
+	}while(window.pageYOffset > findPos(document.getElementById("js-commentsHolder")) && window.pageYOffset < pos - 10);
 	drawBorder(newComms[index]);
-	window.scroll(0, findPos(newComms[index]));
+	window.scroll(0, pos);
+	$("#current_comment").text(index + 1);
 }
 
 function keyDownHandler(e) {
@@ -66,14 +78,25 @@ function keyDownHandler(e) {
 	}
 }
 
+
 var newComms = $("#js-commentsHolder div.new").get();
 var index = 0;
 
 if (newComms.length > 0) {
-	$("<div />", {className: "lc-next-block"})
-		.append($("<span />", { text: "↑", click: ScrollToPrevNewComment }))
-		.append($("<span />", { text: "↓", click: ScrollToNextNewComment }))
-		.appendTo("body");
+	readSettings(NAVIGATE_WITH_KEY, function(navigateWith){
+		if(navigateWith === "arrows"){
+			$("<div />", {className: "lc-next-block"})
+				.append($("<span />", { text: "↑", click: ScrollToPrevNewComment }))
+				.append($("<span />", { text: "↓", click: ScrollToNextNewComment }))
+				.appendTo("body");
+		} else {
+			$("<div />", { id: "scroll_buttons" })
+				.append($("<button />", { id: "current_comment", text: "1", click: ScrollToPrevNewComment}))
+				.append($("<span />",{ text:" / "}))
+				.append($("<button />", { text: newComms.length, click: ScrollToNextNewComment}))
+				.appendTo("body");
+		}
+	});
 	document.addEventListener('keydown', keyDownHandler, false);
 }
 });
