@@ -6,7 +6,7 @@ function setPopupInformation(lepra) {
 		var sing = ""
 
 		if (vote.attitude[0] !== "-") {
-			sign = "+"
+			sign = "+";
 		}
 		lastkarmavotes += vote.login + " " + sign + vote.attitude + "\r\n";
 	}
