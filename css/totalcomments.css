@@ -1,0 +1,7 @@
+.filter{
+	cursor: pointer;
+	display: inline;
+	border-bottom: 1px dotted #000000;
+	margin-right: 10px;
+}
+

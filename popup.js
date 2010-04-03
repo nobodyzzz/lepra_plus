@@ -1,12 +1,14 @@
 function setPopupInformation(lepra) {
 	var lastkarmavotes = "Last votes: \r\n";
 
-	for (var i = 0; i < 3; i++) {
-		var vote = lepra.karmavotes.pop();
+	for (var i = 1; i <= 3; i++) {
+		var vote = lepra.karmavotes[lepra.karmavotes.length - i];
+		var sing = ""
+
 		if (vote.attitude[0] !== "-") {
-			vote.attitude = "+" + vote.attitude;
+			sign = "+"
 		}
-		lastkarmavotes += vote.login + " " + vote.attitude + "\r\n";
+		lastkarmavotes += vote.login + " " + sign + vote.attitude + "\r\n";
 	}
 	$("#loading").hide();
 	$("#result").show();
