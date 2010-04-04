@@ -1,7 +1,30 @@
 .filter{
 	cursor: pointer;
-	display: inline;
+	display: inline !important;
 	border-bottom: 1px dotted #000000;
 	margin-right: 10px;
+}
+.filter.selected{
+	border-bottom: 2px solid #ff0000;
+}
+
+#author_selector{
+	border: 1px solid #F0F0F0;
+	min-width: 80px;
+	min-height: 20px;
+	position: absolute;
+	z-index: 99;
+	color: #999;
+	background: #ffffff;
+	font-size: 10px;
+	padding: 0px;
+	white-space: nowrap;
+	display: none;
+}
+#author_selector ul{
+	list-style: none;
+}
+#author_selector ul li:hover{
+	background: #F6EFD2;
 }
 
