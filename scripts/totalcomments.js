@@ -137,27 +137,22 @@ function buildAuthorList(){
 
 var modes = [
 	{
-		id: 'all',
 		title: 'все',
 		selector: ''
 	},
 	{
-		id: 'new',
 		title: 'новые',
 		selector: '.new'
 	},
 	{
-		id: 'with_images',
 		title: 'с картинками',
 		selector: ':has(img)'
 	},
 	{
-		id: 'cool',
 		title: 'клеви',
 		selector: '.cool'
 	},
 	{
-		id: 'mine',
 		title: 'мои',
 		selector: '.mine'
 	}
