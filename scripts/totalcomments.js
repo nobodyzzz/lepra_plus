@@ -135,25 +135,29 @@ function buildAuthorList(){
 						    .liveUpdate("#author_selector");
 }
 
-
 var modes = [
 	{
+		id: 'all',
 		title: 'все',
 		selector: ''
 	},
 	{
+		id: 'new',
 		title: 'новые',
 		selector: '.new'
 	},
 	{
+		id: 'with_images',
 		title: 'с картинками',
 		selector: ':has(img)'
 	},
 	{
+		id: 'cool',
 		title: 'клеви',
 		selector: '.cool'
 	},
 	{
+		id: 'mine',
 		title: 'мои',
 		selector: '.mine'
 	}
@@ -170,6 +174,7 @@ for(var i = 0; i < modes.length; i += 1){
 	var count = $("#js-commentsHolder .post" + modes[i].selector).length;
 
 	$("#totalcommentsspan").append($("<span />", {
+		id: modes[i].id, 
 		className: "filter", 
 		text: modes[i].title + " (" + count + ")", 
 		click: applyFilter(modes[i].selector)
