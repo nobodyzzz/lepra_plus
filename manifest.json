@@ -16,7 +16,7 @@
 		"js": ["prefs.js", "scripts/sublepras.js"],
 		"matches": ["http://*.leprosorium.ru/*"]		
 	}, {
-		"js": ["prefs.js", "libs/jquery.js","scripts/nicecommentnavigation.js"],
+		"js": ["prefs.js", "libs/jquery.js", "scripts/nicecommentnavigation.js"],
 		"css": ["css/nicecommentnavigation.css"],
 		"matches": ["http://leprosorium.ru/comments/*", "http://*.leprosorium.ru/comments/*", "http://leprosorium.ru/my/inbox/*", "http://dirty.ru/comments/*"]
 	}, {

@@ -1,23 +1,4 @@
 ifEnabled("nicecommentnavigation", function(){
-// ==UserScript==
-// @name Lepra nice new comments navigation 
-// @namespace http://leprosorium.ru
-// @include http://leprosorium.ru/comments/*
-// @include http://*.leprosorium.ru/comments/*
-// @include http://leprosorium.ru/my/inbox/*
-// ==/UserScript==
-
-function findPos(obj) {
-	var curtop = 0;
-
-	if (obj.offsetParent) {
-		do {
-			curtop += obj.offsetTop;
-		}
-		while (obj = obj.offsetParent);
-		return curtop;
-	}
-}
 
 function drawBorder(element) {
 	$("#" + element.id + " .dt").addClass("dt_border");
@@ -30,33 +11,23 @@ function removeBorder(element) {
 }
 
 function ScrollToNextNewComment() {
-	var pos = 0;
-
 	removeBorder(newComms[index]);
-	do{
-		index++;
-		index %= newComms.length;
-		pos = findPos(newComms[index])
-	}while(window.pageYOffset > pos);
+	index++;
+	index %= newComms.length;
 	drawBorder(newComms[index]);
-	window.scroll(0, pos - 10);
+	window.scroll(0, $(newComms[index]).offset().top - 10);
 	$("#current_comment").text(index + 1);
 }
 
 function ScrollToPrevNewComment() {
-	var pos = 0;
-
 	removeBorder(newComms[index]);
-	do{	
-		index--;
-		index %= newComms.length;
-		if (index < 0) {
-			index += newComms.length;
-		}
-		pos = findPos(newComms[index])
-	}while(window.pageYOffset > findPos(document.getElementById("js-commentsHolder")) && window.pageYOffset < pos - 10);
+	index--;
+	index %= newComms.length;
+	if (index < 0) {
+		index += newComms.length;
+	}
 	drawBorder(newComms[index]);
-	window.scroll(0, pos);
+	window.scroll(0, $(newComms[index]).offset().top - 10);
 	$("#current_comment").text(index + 1);
 }
 
