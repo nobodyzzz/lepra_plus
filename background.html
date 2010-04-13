@@ -42,7 +42,12 @@
 							var settings;
 
 							if(typeof msg === "string"){
-								settings = localStorage[msg];
+								if(msg.endsWith("()")){
+									settings = eval(msg);									
+								} else {
+									settings = localStorage[msg];
+								}
+
 							} else if(msg instanceof Array){
 								settings = new Object();
 								for(var i = 0, n = msg.length; i < n; i += 1){

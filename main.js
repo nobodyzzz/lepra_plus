@@ -6,6 +6,9 @@ String.prototype.fmt = function() {
 	}
 	return txt;
 };
+String.prototype.endsWith = function(suffix) {
+    return this.indexOf(suffix, this.length - suffix.length) !== -1;
+};
 function updateInfo(){
 	 $.ajax({
                 url: "http://leprosorium.ru/api/lepropanel/",
