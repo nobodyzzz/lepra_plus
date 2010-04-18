@@ -5,7 +5,7 @@
 	"icons": {
       "128": "images/icon-128.gif"
    	},
-	"permissions": [ "http://leprosorium.ru/*", "tabs" ],
+	"permissions": [ "http://*.leprosorium.ru/*", "tabs" ],
 	"browser_action": {
 		"default_icon": "images/logo.png", 
 		"popup": "popup.html"                
@@ -30,7 +30,7 @@
 		"js": ["prefs.js", "scripts/leprapreview.js"],
 		"matches": ["http://*.leprosorium.ru/*"]		
 	}, {
-		"js": ["prefs.js", "scripts/inline_info_ex.js"],
+		"js": ["prefs.js", "libs/xhrproxy.js","scripts/inline_info_ex.js"],
 		"matches": ["http://*.leprosorium.ru/*"]		
 	}, {
 		"js": ["prefs.js", "libs/jquery.js", "scripts/badgeliveupdate.js"],

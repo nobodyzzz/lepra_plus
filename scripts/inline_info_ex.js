@@ -134,45 +134,6 @@ ifEnabled("inline_info_ex", function() {
 			clearInterval(hid);
 		}
 
-		function GM_xmlhttpRequest_Opera(options) {
-			var request = new XMLHttpRequest(),
-			validEvents = {
-				onload: null,
-				onerror: null,
-				onreadystatechange: null
-			};
-
-			function addXMLHttpRequestListener(request, eventName, callback) {
-				request[eventName] = function(event) {
-					var responseDetails = {
-						responseText: request.responseText,
-						readyState: request.readyState,
-						responseHeaders: (request.readyState == 4 ? request.getAllResponseHeaders() : ''),
-						status: request.readyState == 4 ? request.status: 0,
-						statusText: request.readyState == 4 ? request.statusText: ''
-					};
-					callback.call(null, responseDetails);
-				}
-			}
-
-			// add event listeners
-			for (var eventName in validEvents) {
-				if (options[eventName]) addXMLHttpRequestListener(request, eventName, options[eventName]);
-			}
-
-			// open the connection
-			request.open(options.method, options.url, true);
-
-			// set the headers
-			for (var header in options.headers) {
-				request.setRequestHeader(header, options.headers[header]);
-			}
-
-			// send the data
-			request.send(options.data);
-			return request;
-		}
-
 		//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------  
 		var login = "";
 		// лепрономер
@@ -314,7 +275,8 @@ ifEnabled("inline_info_ex", function() {
 			callback: null
 		};
 
-		function processor(xhr) {
+		function processor(status, data, xhr) {
+			
 			if (xhr) {
 				GM_logEx('fetched ' + uData.url);
 				uData.url = null; // clear !!!!
@@ -332,18 +294,11 @@ ifEnabled("inline_info_ex", function() {
 				GM_logEx('call processor: ' + uData.url);
 				//.............
 				setTimeout(function() {
-					/*if (window.opera)
-										{*/
-					GM_xmlhttpRequest_Opera({
-						'method': 'GET',
-						'url': uData.url,
-						'onload': processor,
-						'onerror': processor
+					proxyXHR({
+						method: 'GET',
+						url: uData.url,
+						onComplete : processor
 					});
-					/*} else	
-										{
-											GM_xmlhttpRequest({'method':'GET', 'url':uData.url,'onload':processor, 'onerror':processor});
-										}*/
 				},
 				Math.floor(SEND_INTERVAL * Math.random()));
 			}
