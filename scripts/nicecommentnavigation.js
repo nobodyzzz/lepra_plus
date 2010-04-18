@@ -58,7 +58,7 @@ function ScrollToComment(getPos, e){
 		removeBorder(newComms[index]);
 	}
 	pos = getPos();
-	if(!$(newComms[index]).hasClass("indent_0") && (options.showParentComment || e.ctrlKey)){
+	if(!$(newComms[index]).hasClass("indent_0") && (options.showPrevComment || e.ctrlKey)){
 		var prev = $(newComms[index]).prev();
 
 		if(prev.length){

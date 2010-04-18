@@ -125,7 +125,7 @@ $(function(){
 		$("#drawBorder").attr({checked: navigateOptions.drawBorder});
 		$("#highliteComment").attr({checked: navigateOptions.highliteComment});
 		$("#highliteColor").val(navigateOptions.highliteColor);
-		$("#showParentComment").attr({checked: navigateOptions.showParentComment});
+		$("#showPrevComment").attr({checked: navigateOptions.showPrevComment});
 		$("#smoothScroll").attr({checked: navigateOptions.smoothScroll});
 
 
@@ -196,7 +196,7 @@ $(function(){
 			navigateOptions.drawBorder = formNode["drawBorder"].checked;
 			navigateOptions.highliteComment = formNode["highliteComment"].checked;
 			navigateOptions.highliteColor = formNode["highliteColor"].value;
-			navigateOptions.showParentComment = formNode["showParentComment"].checked;
+			navigateOptions.showPrevComment = formNode["showPrevComment"].checked;
 			navigateOptions.smoothScroll = formNode["smoothScroll"].checked;
 			setCommentNavigationOptions(navigateOptions);
 			

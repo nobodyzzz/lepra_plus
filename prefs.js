@@ -93,7 +93,7 @@ function getCommentNavigationOptions(){
 			drawBorder: true,
 			highliteComment: false,
 			highliteColor: "#f4fbac",
-			showParentComment: false,
+			showPrevComment: false,
 			smoothScroll: false
 		}
 	}
