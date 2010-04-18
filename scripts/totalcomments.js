@@ -134,24 +134,8 @@ ifEnabled("totalcomments", function() {
 		});
 		$("#author_filter").val("").liveUpdate("#author_selector");
 	}
-<<<<<<< HEAD
-	$("#author_selector ul li").click(function(e){
-		var author = e.target.innerText;
-
-		author = author.substr(0, author.indexOf("("));
-		$("#totalcommentsspan input").val(author); 
-		applyAuthorFilter(author);
-	});
-	$("#totalcommentsspan input").val("")
-						    .liveUpdate("#author_selector");
-}
-
-var modes = [
-	{
-=======
 
 	var modes = [{
->>>>>>> 0.1.1
 		title: 'все',
 		selector: ''
 	},
@@ -198,35 +182,6 @@ var modes = [
 	}
 
 	$("#totalcommentsspan").append($("<span />", {
-<<<<<<< HEAD
-		id: modes[i].id, 
-		className: "filter", 
-		text: modes[i].title + " (" + count + ")", 
-		click: applyFilter(modes[i].selector)
-	}));
-}
-
-$("#totalcommentsspan").append($("<span />", {
-    text: "автор:",
-    className: "filter",
-    title: "Показать комментарии только этого юзернейма",
-    click: buildAuthorList,
-    id: "control_author"
-})).append($("<input>", {
-    id: "author_filter",
-    css: {
-        width: "80px"
-    }
-}).focus(buildAuthorList).keydown(function (e) {
-    if (e.which === 13) {
-        applyAuthorFilter();
-    }
-}));
-
-$(document).click(function(e){
-	if($("#author_selector:visible").length){
-		if(e.target.id !== "control_author" && e.target.id !== "author_selector" && e.target.id !== "author_filter"){
-=======
 		text: "автор:",
 		className: "filter",
 		title: "Показать комментарии только этого юзернейма",
@@ -240,7 +195,6 @@ $(document).click(function(e){
 		}
 	}).focus(buildAuthorList).keydown(function(e) {
 		if (e.which === 13) {
->>>>>>> 0.1.1
 			applyAuthorFilter();
 		}
 	}));
