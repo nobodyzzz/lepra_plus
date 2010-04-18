@@ -24,22 +24,45 @@ function flashColor(element)
 		p.css({backgroundColor: originalColor});
 	}, 350);
 }
-
-
-function ScrollToNextNewComment() {
+function getNextCommentPos(){
+	var pos = 0;
+	do{
+		index++;
+		index %= newComms.length;
+		pos = $(newComms[index]).offset().top;
+		if(index === 0){
+			break;
+		}
+	}while(window.pageYOffset > pos)
+	return pos - 10;
+}
+function getPrevCommentPos(){
+	var pos = 0;
+	do{
+		index--;
+		index %= newComms.length;
+		if (index < 0) {
+			index += newComms.length;
+		}
+		pos = $(newComms[index]).offset().top;
+		if(index === 0){
+			break;
+		}
+	}while(window.pageYOffset > $("#js-commentsHolder").offset().top && window.pageYOffset < pos - 10);
+	return pos - 10;
+}
+function ScrollToComment(getPos, e){
 	var pos = 0;
 
 	if(options.drawBorder){
 		removeBorder(newComms[index]);
 	}
-	index++;
-	index %= newComms.length;
-	pos = $(newComms[index]).offset().top - 10;
-	if(options.showParentComment){
-		var parent_link = $(newComms[index]).find("a.show_parent");
+	pos = getPos();
+	if(!$(newComms[index]).hasClass("indent_0") && (options.showParentComment || e.ctrlKey)){
+		var prev = $(newComms[index]).prev();
 
-		if(parent_link.length){
-			pos = $(parent_link.attr("href")).offset().top - 10;
+		if(prev.length){
+			pos = prev.offset().top - 10;
 		}
 	}
 	if(options.drawBorder){
@@ -56,37 +79,12 @@ function ScrollToNextNewComment() {
 	$("#current_comment").text(index + 1);
 }
 
-function ScrollToPrevNewComment() {
-	var pos = 0;
-		
-	if(options.drawBorder){
-		removeBorder(newComms[index]);
-	}
-	index--;
-	index %= newComms.length;
-	if (index < 0) {
-		index += newComms.length;
-	}
-	pos = $(newComms[index]).offset().top - 10;
-	if(options.showParentComment){
-		var parent_link = $(newComms[index]).find("a.show_parent");
+function ScrollToNextNewComment(e) {
+	ScrollToComment(getNextCommentPos, e);
+}
 
-		if(parent_link.length){
-			pos = $(parent_link.attr("href")).offset().top - 10;
-		}
-	}
-	if(options.drawBorder){
-		drawBorder(newComms[index]);
-	}
-	if(options.smoothScroll){
-		$('html,body').animate({scrollTop: pos}, 250);
-	} else {
-		window.scroll(0, pos);
-	}
-	if(options.highliteComment){
-		flashColor(newComms[index].id);
-	}
-	$("#current_comment").text(index + 1);
+function ScrollToPrevNewComment(e) {
+	ScrollToComment(getPrevCommentPos, e);
 }
 
 function keyDownHandler(e) {
@@ -100,9 +98,9 @@ function keyDownHandler(e) {
 
 	if (targ && ! (targ.tagName in editTags)) {
 		if (e.keyIdentifier == "U+004A" || e.which == e.DOM_VK_J) {
-			ScrollToNextNewComment();
+			ScrollToNextNewComment(e);
 		} else if (e.keyIdentifier == "U+004B" || e.which == e.DOM_VK_K) {
-			ScrollToPrevNewComment();
+			ScrollToPrevNewComment(e);
 		}
 	}
 }
