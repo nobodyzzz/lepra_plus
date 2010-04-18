@@ -26,9 +26,11 @@
 
 
 	</style>
-	<script type="text/javascript" src="keycode.js"></script>
+	<link rel="stylesheet" media="screen" type="text/css" href="css/colorpicker.css" />
+	<script type="text/javascript" src="libs/keycode.js"></script>
 	<script type="text/javascript" src="prefs.js"></script>
-	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="libs/jquery.js"></script>
+	<script type="text/javascript" src="libs/colorpicker.js"></script>
 	<script type="text/javascript" src="main.js"></script>
 	<script type="text/javascript" src="options.js"></script>
 </head>
@@ -88,14 +90,23 @@
 		     <td>Предпросмотра постов и комментов(by <a href="http://leprosorium.ru/users/dilesoft">dilesoft</a>)</td>
 		     <td><input type="checkbox" name="leprapreview" /></td>
 		</tr>
-		<tr>
+		<tr valign="top">
 			<td>Удобная навигация по новым комментариям<br>
 				<div style="margin-left:35px">
 					Навигация:&nbsp;
 					<input type="radio" value="arrows" name="navigate-with" id="arrows" />
 					<label for="arrows">стрелками</label>
 					<input type="radio" value="buttons" name="navigate-with" id="buttons"/>
-					<label for="buttons">кнопками</label>
+					<label for="buttons">кнопками</label><br />
+					<input type="checkbox" name="drawBorder" id="drawBorder" />
+					<label for="drawBorder">Рисовать рамку вокруг текущего комментария</label><br />
+					<input type="checkbox" name="highliteComment" id="highliteComment" />
+					<label for="highliteComment">Подсвечивать текущий комментарий цветом</label>
+					<input type="text" readonly maxlength="6" size="4" name="highliteColor" id="highliteColor" /><br />
+					<input type="checkbox" name="showPrevComment" id="showPrevComment" />
+					<label for="showPrevComment">Проматывать к предыдущему комментарию</label><br />
+					<input type="checkbox" name="smoothScroll" id="smoothScroll" />
+					<label for="smoothScroll">Плавный скрол</label><br />
 				</div>
 			</td>
 		     <td><input type="checkbox" name="nicecommentnavigation" /></td>

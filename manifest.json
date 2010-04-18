@@ -1,11 +1,11 @@
 {
 	"name": "Lepra+",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Надо делать то, что нужно людям, а не то, чем мы занимаемся, %username%.",
 	"icons": {
       "128": "images/icon-128.gif"
    	},
-	"permissions": [ "http://leprosorium.ru/*", "tabs" ],
+	"permissions": [ "http://*.leprosorium.ru/*", "tabs" ],
 	"browser_action": {
 		"default_icon": "images/logo.png", 
 		"popup": "popup.html"                
@@ -16,7 +16,7 @@
 		"js": ["prefs.js", "scripts/sublepras.js"],
 		"matches": ["http://*.leprosorium.ru/*"]		
 	}, {
-		"js": ["prefs.js", "jquery.js","scripts/nicecommentnavigation.js"],
+		"js": ["prefs.js", "libs/jquery.js", "scripts/nicecommentnavigation.js"],
 		"css": ["css/nicecommentnavigation.css"],
 		"matches": ["http://leprosorium.ru/comments/*", "http://*.leprosorium.ru/comments/*", "http://leprosorium.ru/my/inbox/*"]
 	}, {
@@ -30,13 +30,13 @@
 		"js": ["prefs.js", "scripts/leprapreview.js"],
 		"matches": ["http://*.leprosorium.ru/*"]		
 	}, {
-		"js": ["prefs.js", "scripts/inline_info_ex.js"],
+		"js": ["prefs.js", "libs/xhrproxy.js","scripts/inline_info_ex.js"],
 		"matches": ["http://*.leprosorium.ru/*"]		
 	}, {
-		"js": ["prefs.js", "jquery.js", "scripts/badgeliveupdate.js"],
+		"js": ["prefs.js", "libs/jquery.js", "scripts/badgeliveupdate.js"],
 		"matches": ["http://*.leprosorium.ru/*"]
 	}, {
-      "js": [ "prefs.js", "jquery.js", "scripts/jquery.hotkeys.js", "scripts/textareashortcuts.js" ],
+      "js": [ "prefs.js", "libs/jquery.js", "libs/jquery.hotkeys.js", "scripts/textareashortcuts.js" ],
       "matches": [ "http://*.leprosorium.ru/*" ]
    	}]
 }

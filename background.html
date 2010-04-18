@@ -4,7 +4,8 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <title>Lepra+ backroung page</title>
     <script src="prefs.js" type="text/javascript"></script>
-    <script src="jquery.js" type="text/javascript"></script>
+    <script src="libs/jquery.js" type="text/javascript"></script>
+    <script src="libs/xhrproxy.js" type="text/javascript"></script>
     <script src="main.js" type="text/javascript"></script>
     <script type="text/javascript">
 	     var updateInterval = null;
@@ -42,7 +43,12 @@
 							var settings;
 
 							if(typeof msg === "string"){
-								settings = localStorage[msg];
+								if(msg.endsWith("()")){
+									settings = eval(msg);									
+								} else {
+									settings = localStorage[msg];
+								}
+
 							} else if(msg instanceof Array){
 								settings = new Object();
 								for(var i = 0, n = msg.length; i < n; i += 1){
@@ -55,17 +61,9 @@
 					port.onMessage.addListener(function(msg){
 						chrome.browserAction.setBadgeText({text: msg});
 					});
-				} else if(port.name === "xhr"){
-					port.onMessage.addListener(function(url){
-						var xhr = new XMLHttpRequest();
-
-						xhr.open("GET", requestUrl, false);
-						xhr.send();
-						port.postMessage(xhr);
-					});
 				}
-
 			});
+			setupXHRProxy();
 		});
     </script>
 </head>

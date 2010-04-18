@@ -1,10 +1,8 @@
-// Copyright 2009 Google Inc. All Rights Reserved.
-
 var CLICK_BEHAVIOR_KEY = 'click-behavior';
 var REFRESH_INTERVAL_KEY = 'refresh-interval';
 var SHOW_ON_BADGE_KEY = 'show-on-badge';
 var TEXT_AREA_SHORTCUTS_KEY = 'text-area-shortcuts';
-var NAVIGATE_WITH_KEY = "navigate-with";
+var NAVIGATION_OPTIONS = "navigation-options";
 var USER_SCRIPTS = [
 'inline_info_ex',
 'leprapreview',
@@ -84,6 +82,27 @@ function setTextareaShortcuts(value){
 	localStorage[TEXT_AREA_SHORTCUTS_KEY] = JSON.stringify(value);
 }
 
+function getCommentNavigationOptions(){
+	var options = localStorage[NAVIGATION_OPTIONS];
+
+	if(options){
+		return JSON.parse(options);
+	} else {
+		return {
+			navigateWith: "arrows",
+			drawBorder: true,
+			highliteComment: false,
+			highliteColor: "#f4fbac",
+			showPrevComment: false,
+			smoothScroll: false
+		}
+	}
+}
+
+function setCommentNavigationOptions(options){
+	localStorage[NAVIGATION_OPTIONS] = JSON.stringify(options);
+}
+
 function getShortcutsBindings(callback){
 	var port = chrome.extension.connect({name: "textarea-shortcuts"});
 	
@@ -104,9 +123,3 @@ function readSettings(options, fn){
 	port.postMessage(options);
 }
 
-function getNavigateWith(){
-	return localStorage[NAVIGATE_WITH_KEY] || "arrows";
-}
-function setNavigateWith(value){
-	localStorage[NAVIGATE_WITH_KEY] = value;
-}

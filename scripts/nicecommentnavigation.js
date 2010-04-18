@@ -1,23 +1,4 @@
 ifEnabled("nicecommentnavigation", function(){
-// ==UserScript==
-// @name Lepra nice new comments navigation 
-// @namespace http://leprosorium.ru
-// @include http://leprosorium.ru/comments/*
-// @include http://*.leprosorium.ru/comments/*
-// @include http://leprosorium.ru/my/inbox/*
-// ==/UserScript==
-
-function findPos(obj) {
-	var curtop = 0;
-
-	if (obj.offsetParent) {
-		do {
-			curtop += obj.offsetTop;
-		}
-		while (obj = obj.offsetParent);
-		return curtop;
-	}
-}
 
 function drawBorder(element) {
 	$("#" + element.id + " .dt").addClass("dt_border");
@@ -29,35 +10,81 @@ function removeBorder(element) {
 	$("#" + element.id + " .p").removeClass("p_border");
 }
 
-function ScrollToNextNewComment() {
-	var pos = 0;
+function flashColor(element)
+{
+	var dt = $("#" + element.id + " .dt");
+	var p = $("#" + element.id + " .p")
+	var originalColor = dt.css("backgroundColor");
+	
 
-	removeBorder(newComms[index]);
+	dt.css({backgroundColor: options.highliteColor});
+	p.css({backgroundColor: options.highliteColor});
+	setTimeout(function(){
+		dt.css({backgroundColor: originalColor});
+		p.css({backgroundColor: originalColor});
+	}, 350);
+}
+function getNextCommentPos(){
+	var pos = 0;
 	do{
 		index++;
 		index %= newComms.length;
-		pos = findPos(newComms[index])
-	}while(window.pageYOffset > pos);
-	drawBorder(newComms[index]);
-	window.scroll(0, pos - 10);
-	$("#current_comment").text(index + 1);
+		pos = $(newComms[index]).offset().top;
+		if(index === 0){
+			break;
+		}
+	}while(window.pageYOffset > pos)
+	return pos - 10;
 }
-
-function ScrollToPrevNewComment() {
+function getPrevCommentPos(){
 	var pos = 0;
-
-	removeBorder(newComms[index]);
-	do{	
+	do{
 		index--;
 		index %= newComms.length;
 		if (index < 0) {
 			index += newComms.length;
 		}
-		pos = findPos(newComms[index])
-	}while(window.pageYOffset > findPos(document.getElementById("js-commentsHolder")) && window.pageYOffset < pos - 10);
-	drawBorder(newComms[index]);
-	window.scroll(0, pos);
+		pos = $(newComms[index]).offset().top;
+		if(index === 0){
+			break;
+		}
+	}while(window.pageYOffset > $("#js-commentsHolder").offset().top && window.pageYOffset < pos - 10);
+	return pos - 10;
+}
+function ScrollToComment(getPos, e){
+	var pos = 0;
+
+	if(options.drawBorder){
+		removeBorder(newComms[index]);
+	}
+	pos = getPos();
+	if(!$(newComms[index]).hasClass("indent_0") && (options.showPrevComment || e.ctrlKey)){
+		var prev = $(newComms[index]).prev();
+
+		if(prev.length){
+			pos = prev.offset().top - 10;
+		}
+	}
+	if(options.drawBorder){
+		drawBorder(newComms[index]);
+	}
+	if(options.smoothScroll){
+		$('html,body').animate({scrollTop:  pos}, 250);
+	} else {
+		window.scroll(0, pos);
+	}
+	if(options.highliteComment){
+		flashColor(newComms[index]);
+	}
 	$("#current_comment").text(index + 1);
+}
+
+function ScrollToNextNewComment(e) {
+	ScrollToComment(getNextCommentPos, e);
+}
+
+function ScrollToPrevNewComment(e) {
+	ScrollToComment(getPrevCommentPos, e);
 }
 
 function keyDownHandler(e) {
@@ -71,9 +98,9 @@ function keyDownHandler(e) {
 
 	if (targ && ! (targ.tagName in editTags)) {
 		if (e.keyIdentifier == "U+004A" || e.which == e.DOM_VK_J) {
-			ScrollToNextNewComment();
+			ScrollToNextNewComment(e);
 		} else if (e.keyIdentifier == "U+004B" || e.which == e.DOM_VK_K) {
-			ScrollToPrevNewComment();
+			ScrollToPrevNewComment(e);
 		}
 	}
 }
@@ -81,10 +108,12 @@ function keyDownHandler(e) {
 
 var newComms = $("#js-commentsHolder div.new").get();
 var index = 0;
+var options;
 
 if (newComms.length > 0) {
-	readSettings(NAVIGATE_WITH_KEY, function(navigateWith){
-		if(navigateWith === "arrows"){
+	readSettings('getCommentNavigationOptions()', function(value){
+		options = value; 
+		if(options.navigateWith === "arrows"){
 			$("<div />", {className: "lc-next-block"})
 				.append($("<span />", { text: "↑", click: ScrollToPrevNewComment }))
 				.append($("<span />", { text: "↓", click: ScrollToNextNewComment }))

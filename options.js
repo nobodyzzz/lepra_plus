@@ -95,7 +95,7 @@ function randInt(max) {
 $(function(){
 		var formNode = document.getElementById('options-form');   
 		var clickBehavior = getClickBehavior();
-		var navigateWith = getNavigateWith(); 
+		var navigateOptions = getCommentNavigationOptions(); 
 		var refreshIterval = getRefreshInterval();
 		var refreshIntervalNode = formNode['refresh-interval'];
 		var showOnBadgeNode = formNode['show-on-badge'];
@@ -104,6 +104,30 @@ $(function(){
 		var defaultFontSize = localStorage["fontSize"] || "medium";
 		var fontSizes = ["xx-small", "x-small", "small", "medium", "large" ,"x-large", "xx-large"];
 		var fontSizeIndex = fontSizes.indexOf(defaultFontSize);
+
+		$("#highliteColor").ColorPicker({
+			color: navigateOptions.highliteColor,
+			onSubmit: function(hsb, hex, rgb, el) {
+				$('#highliteColor').css('backgroundColor', '#' + hex)
+							    .val("#" + hex)
+							    .ColorPickerHide();
+			},
+               onBeforeShow: function () {
+				$(this).ColorPickerSetColor(this.value);
+            	},
+			onChange: function(hsb, hex, rgb){
+				$('#highliteColor').css('backgroundColor', '#' + hex)
+							    .val("#" + hex)
+			}
+
+		}).css('backgroundColor',  navigateOptions.highliteColor);
+		$("#" + navigateOptions.navigateWith).attr({checked: true});
+		$("#drawBorder").attr({checked: navigateOptions.drawBorder});
+		$("#highliteComment").attr({checked: navigateOptions.highliteComment});
+		$("#highliteColor").val(navigateOptions.highliteColor);
+		$("#showPrevComment").attr({checked: navigateOptions.showPrevComment});
+		$("#smoothScroll").attr({checked: navigateOptions.smoothScroll});
+
 
 		$("#bigger").click(function(){
 			if(fontSizeIndex + 1 < fontSizes.length){
@@ -122,7 +146,6 @@ $(function(){
 		$("#options").css({fontSize: defaultFontSize});
 		$("#greeting").text(greetings[randInt(greetings.length)]);
 		$("#" + clickBehavior).attr({checked: true});
-		$("#" + navigateWith).attr({checked: true});
 		for (var i = 0, refreshValueNode; refreshValueNode = refreshIntervalNode[i]; i++) {
 			if (refreshValueNode.value == refreshIterval) {
 				refreshValueNode.selected = 'true';
@@ -167,9 +190,15 @@ $(function(){
 			var navigateWithNode = formNode['navigate-with'];
 			for (var i = 0, navigateWithOptionNode; navigateWithOptionNode = navigateWithNode[i]; i++) { 
 				if (navigateWithOptionNode.checked) { 
-					setNavigateWith(navigateWithOptionNode.value); 
+					navigateOptions.navigateWith = navigateWithOptionNode.value; 
 				} 
 			}
+			navigateOptions.drawBorder = formNode["drawBorder"].checked;
+			navigateOptions.highliteComment = formNode["highliteComment"].checked;
+			navigateOptions.highliteColor = formNode["highliteColor"].value;
+			navigateOptions.showPrevComment = formNode["showPrevComment"].checked;
+			navigateOptions.smoothScroll = formNode["smoothScroll"].checked;
+			setCommentNavigationOptions(navigateOptions);
 			
 			clickBehavior = getClickBehavior();
 			if(clickBehavior === "popup"){
