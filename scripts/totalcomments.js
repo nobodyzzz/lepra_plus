@@ -30,7 +30,7 @@ ifEnabled("totalcomments", function() {
 	}
 	function applyAuthorFilter(author) {
 		if (!author) {
-			author = $("#totalcommentsspan input").val();
+			author = $("#author_filter").val();
 		}
 		if ($("#js-commentsHolder .post:visible.by-" + author).length) {
 			if (current_selector.indexOf(".by-") !== - 1) {
@@ -39,7 +39,7 @@ ifEnabled("totalcomments", function() {
 			current_selector += ".by-" + author;
 			$("#js-commentsHolder .post").show();
 			$("#js-commentsHolder .post:not({0})".fmt(current_selector)).hide();
-			$("#totalcommentsspan span:last").addClass("selected");
+			$("#control_author").addClass("selected");
 		}
 		$("#author_selector").hide();
 	}
@@ -101,7 +101,7 @@ ifEnabled("totalcomments", function() {
 	};
 
 	function buildAuthorList() {
-		var pos = $("#totalcommentsspan input").offset();
+		var pos = $("#author_filter").offset();
 		var authors = [];
 
 		pos.top += 18;
@@ -129,10 +129,10 @@ ifEnabled("totalcomments", function() {
 			var author = e.target.innerText;
 
 			author = author.substr(0, author.indexOf("("));
-			$("#totalcommentsspan input").val(author);
+			$("#author_filter").val(author);
 			applyAuthorFilter(author);
 		});
-		$("#totalcommentsspan input").val("").liveUpdate("#author_selector");
+		$("#author_filter").val("").liveUpdate("#author_selector");
 	}
 
 	var modes = [{
@@ -213,7 +213,7 @@ ifEnabled("totalcomments", function() {
 		var author = $(this).parent().find("a[href*='users']").text();
 
 		applyAuthorFilter(author);
-		$("#totalcommentsspan input").val(author);
+		$("#author_filter").val(author);
 		return true;
 	});
 	$("#js-commentsHolder .post .dd .p a.show_parent").click(function() {
