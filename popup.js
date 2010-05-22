@@ -12,7 +12,7 @@ function setPopupInformation(lepra) {
 	}
 	$("#loading").hide();
 	$("#result").show();
-	$("#piska").text(lepra.karma + "/" + lepra.rating).attr({
+	$("#piska").append($("<nobr/>", {text : lepra.karma + "/" + lepra.rating})).attr({
 		title: lastkarmavotes
 	});
 	$("#inbox").text(lepra.inboxunreadposts + "/" + lepra.inboxunreadcomms);
