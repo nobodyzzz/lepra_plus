@@ -142,6 +142,7 @@ ifEnabled("inline_info_ex", function() {
 		//
 		var base_response = "";
 		var add_response = "";
+		var wtf = "";
 
 		function onFillbase(e) {
 			html = e.responseText;
@@ -170,6 +171,12 @@ ifEnabled("inline_info_ex", function() {
 			if (m) {
 				ugopka = m[1];
 			}
+
+			m = html.match(/VoteBlockUser.wtf = \"(.+)\";/);
+			if (m){
+				wtf = m[1];
+			}
+			
 
 			div_html += "<table id=tbl style=\"padding: 0; width: 100%; margin: 0 0 5px 0; \"><tr id=tbl_tr><td id=td_text_head>";
 			div_html += "<p id=inga style=\"background-color: red; padding: 5px 0 5px 35px; background: url(http://leprastuff.ru/data/img/20090711/9f4634efeeaf3e55e5ac6a8d634f98d6.gif) left top no-repeat;\">";
@@ -238,7 +245,7 @@ ifEnabled("inline_info_ex", function() {
 		// http://leprosorium.ru/karma/?wtf=b1d206af4d85dcd0f62a5077af407e11&u_id=26684&value=4	
 		function tender_vote(r) {
 			//JSONP request
-			var url = "http://leprosorium.ru/karma/?wtf=b1d206af4d85dcd0f62a5077af407e11&u_id=" + uid + "&value=" + r;
+			var url = "http://leprosorium.ru/karma/?wtf=" + wtf + "&u_id=" + uid + "&value=" + r;
 			var req = "var myRequest = new Request({url:'" + url + "',data: {}, method:'GET', noCache: true,onComplete: function(myVote){ document.getElementById('rating').innerHTML = myVote; }}).send();";
 			req += " return false;";
 			return req;
