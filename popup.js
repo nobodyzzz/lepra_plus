@@ -3,7 +3,7 @@ function setPopupInformation(lepra) {
 
 	for (var i = 1; i <= 3; i++) {
 		var vote = lepra.karmavotes[lepra.karmavotes.length - i];
-		var sing = ""
+		var sign = ""
 
 		if (vote.attitude[0] !== "-") {
 			sign = "+";
