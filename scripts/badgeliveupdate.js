@@ -19,7 +19,7 @@ function rtrim(str, chars) {
 	return str.replace(new RegExp("[" + chars + "]+$", "g"), "");
 }
 
-readSettings(SHOW_ON_BADGE_KEY, function(showOnBadge) {
+readSettings(SHOW_ON_BADGE_KEY(), function(showOnBadge) {
 	if (["myunreadposts", "myunreadcomms", "inboxunreadposts", "inboxunreadcomms"].indexOf(showOnBadge) !== - 1) {
 		var things = trim($("#things a span em").text().replace("мои вещи", ""));
 		var inbox = $("#inbox a span em").text();

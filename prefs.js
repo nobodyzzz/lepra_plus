@@ -1,41 +1,34 @@
-var CLICK_BEHAVIOR_KEY = 'click-behavior';
-var REFRESH_INTERVAL_KEY = 'refresh-interval';
-var SHOW_ON_BADGE_KEY = 'show-on-badge';
-var TEXT_AREA_SHORTCUTS_KEY = 'text-area-shortcuts';
-var NAVIGATION_OPTIONS = "navigation-options";
-var USER_SCRIPTS = [
-'inline_info_ex',
-'leprapreview',
-'nicecommentnavigation',
-'personal_hell',
-'sublepras',
-'textareashortcuts',
-'totalcomments'
-]
+function CLICK_BEHAVIOR_KEY() { return 'click-behavior'; }
+function REFRESH_INTERVAL_KEY() { return 'refresh-interval'; }
+function SHOW_ON_BADGE_KEY() { return 'show-on-badge'; }
+function TEXT_AREA_SHORTCUTS_KEY() { return 'text-area-shortcuts'; }
+function NAVIGATION_OPTIONS() { return "navigation-options"; }
+function USER_SCRIPTS() { return [ 'inline_info_ex', 'leprapreview', 'nicecommentnavigation',
+'personal_hell', 'sublepras', 'textareashortcuts', 'totalcomments' ];}
 
 
 function getClickBehavior() {
-  return localStorage[CLICK_BEHAVIOR_KEY] || 'popup';
+  return localStorage[CLICK_BEHAVIOR_KEY()] || 'popup';
 }
 
 function setClickBehavior(value) {
-  localStorage[CLICK_BEHAVIOR_KEY] = value;
+  localStorage[CLICK_BEHAVIOR_KEY()] = value;
 }
 
 function getRefreshInterval() {
-  return parseInt(localStorage[REFRESH_INTERVAL_KEY] || '300000', 10);
+  return parseInt(localStorage[REFRESH_INTERVAL_KEY()] || '300000', 10);
 }
 
 function setRefreshInterval(value) {
-  localStorage[REFRESH_INTERVAL_KEY] = value;
+  localStorage[REFRESH_INTERVAL_KEY()] = value;
 }
 
 function getShowOnBadge(){
-	return localStorage[SHOW_ON_BADGE_KEY] || 'none';
+	return localStorage[SHOW_ON_BADGE_KEY()] || 'none';
 }
 
 function setShowOnBadge(value){
-	localStorage[SHOW_ON_BADGE_KEY] = value;
+	localStorage[SHOW_ON_BADGE_KEY()] = value;
 }
 
 function setUserJsEnabled(userjs, enabled){
@@ -60,7 +53,7 @@ function ifEnabled(userjs, callback){
 }
 
 function getTextareaShortcuts(){
-	var scuts = localStorage[TEXT_AREA_SHORTCUTS_KEY];
+	var scuts = localStorage[TEXT_AREA_SHORTCUTS_KEY()];
 	
 	if(scuts){
 		return JSON.parse(scuts);
@@ -79,11 +72,11 @@ function getTextareaShortcuts(){
 }
 
 function setTextareaShortcuts(value){
-	localStorage[TEXT_AREA_SHORTCUTS_KEY] = JSON.stringify(value);
+	localStorage[TEXT_AREA_SHORTCUTS_KEY()] = JSON.stringify(value);
 }
 
 function getCommentNavigationOptions(){
-	var options = localStorage[NAVIGATION_OPTIONS];
+	var options = localStorage[NAVIGATION_OPTIONS()];
 
 	if(options){
 		return JSON.parse(options);
@@ -100,7 +93,7 @@ function getCommentNavigationOptions(){
 }
 
 function setCommentNavigationOptions(options){
-	localStorage[NAVIGATION_OPTIONS] = JSON.stringify(options);
+	localStorage[NAVIGATION_OPTIONS()] = JSON.stringify(options);
 }
 
 function getShortcutsBindings(callback){
